@@ -25,7 +25,7 @@ const MockLength = 8
 const MockChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 // Key Version-specific and used in production binary
-const Key = "QKZJx3kWTJrrt9umR8l30IyZaqnnZq4"
+const Key = ""
 
 // File used in source version and can be specific to user,
 //const File = "key"
