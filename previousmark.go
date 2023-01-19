@@ -69,7 +69,7 @@ func main() {
 	c.Stdout = os.Stdout
 	_ = c.Run()
 
-	println("previousmark [-all] [resultfile] [output.jpg]  (v2 for Windows x64)")
+	println("previousmark [-all] [resultfile] [output.jpg]  (v3 for Windows x64)")
 	println("Press 1 for  CPU-Z      : memory frequency & CAS latency validation")
 	println("Press 2 for  Clambench  : latency benchmark")
 	print("Press 3 for  PYPrime    : general memory performance benchmark  >>> ")
