@@ -21,6 +21,8 @@ import (
 	"time"
 )
 
+const ResSize = 15
+
 const MockLength = 8
 const MockChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
@@ -49,18 +51,18 @@ func main() {
 	if len(os.Args) > 1 {
 		r, err := os.ReadFile(os.Args[1])
 		if err == nil {
-			c, err2 := strconv.Atoi(strings.Split(os.Args[1], "-")[0])
-			if err2 == nil {
-				r := xor(r, []byte(Key))
-				i := int(r[0])
-				if len(Executables) > i && i >= 0 {
-					println(Executables[i])
-					println(string(r[1 : 1+c]))
-					if len(os.Args) > 2 {
-						_ = os.WriteFile(os.Args[2], r[1+c:], 0666)
-					}
+			//c, err2 := strconv.Atoi(strings.Split(os.Args[1], "-")[0])
+			//if err2 == nil {
+			r = xor(r, []byte(Key))
+			i := int(r[0])
+			if len(Executables) > i && i >= 0 {
+				println(Executables[i])
+				println(string(r[1:ResSize]))
+				if len(os.Args) > 2 {
+					_ = os.WriteFile(os.Args[2], r[ResSize+1:], 0666)
 				}
 			}
+			//}
 		}
 		return
 	}
@@ -218,8 +220,9 @@ func resize(src image.Image, dstSize image.Point) *image.RGBA {
 func encode(result string, i int) {
 	out := mockFilename()
 
-	r := []byte(result)
-	x := append([]byte{byte(i)}, r...)
+	var r [ResSize]byte
+	copy(r[:], result)
+	x := append([]byte{byte(i)}, r[:]...)
 	//y, _ := os.ReadFile(FILE)
 	y := []byte(Key)
 
@@ -228,7 +231,7 @@ func encode(result string, i int) {
 	buf := new(bytes.Buffer)
 	_ = jpeg.Encode(buf, test, nil)
 	x = xor(append(x, buf.Bytes()...), y)
-	out = strconv.Itoa(len(r)) + "-" + out
+	//out = strconv.Itoa(len(r)) + "-" + out
 	_ = os.WriteFile(out, x, 0666)
 
 	//println(result)
